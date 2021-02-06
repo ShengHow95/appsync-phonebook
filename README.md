@@ -1,4 +1,4 @@
-# phonebook
+# AppSync Phonebook
 Demo Nuxtjs Phonebook Project using AWS Amplify + AppSync with Real-time Update
 
 ## Build Setup
