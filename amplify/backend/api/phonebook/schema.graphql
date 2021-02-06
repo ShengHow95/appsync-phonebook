@@ -1,0 +1,6 @@
+type contact @model {
+  id: ID!
+  name: String!
+  contact: String!
+  organization: String
+}

@@ -1,0 +1,158 @@
+type contact {
+  id: ID!
+  name: String!
+  contact: String!
+  organization: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelcontactConnection {
+  items: [contact]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelcontactFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  contact: ModelStringInput
+  organization: ModelStringInput
+  and: [ModelcontactFilterInput]
+  or: [ModelcontactFilterInput]
+  not: ModelcontactFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getContact(id: ID!): contact
+  listContacts(filter: ModelcontactFilterInput, limit: Int, nextToken: String): ModelcontactConnection
+}
+
+input CreateContactInput {
+  id: ID
+  name: String!
+  contact: String!
+  organization: String
+}
+
+input UpdateContactInput {
+  id: ID!
+  name: String
+  contact: String
+  organization: String
+}
+
+input DeleteContactInput {
+  id: ID
+}
+
+type Mutation {
+  createContact(input: CreateContactInput!, condition: ModelcontactConditionInput): contact
+  updateContact(input: UpdateContactInput!, condition: ModelcontactConditionInput): contact
+  deleteContact(input: DeleteContactInput!, condition: ModelcontactConditionInput): contact
+}
+
+input ModelcontactConditionInput {
+  name: ModelStringInput
+  contact: ModelStringInput
+  organization: ModelStringInput
+  and: [ModelcontactConditionInput]
+  or: [ModelcontactConditionInput]
+  not: ModelcontactConditionInput
+}
+
+type Subscription {
+  onCreateContact: contact @aws_subscribe(mutations: ["createContact"])
+  onUpdateContact: contact @aws_subscribe(mutations: ["updateContact"])
+  onDeleteContact: contact @aws_subscribe(mutations: ["deleteContact"])
+}
