@@ -9,6 +9,9 @@
         <nuxt />
       </v-container>
     </v-main>
+    <v-footer app class="d-flex justify-center" height="35">
+      &copy; {{ year }} — Made with 💜 by Jeff Kong
+    </v-footer>
   </v-app>
 </template>
 
@@ -18,18 +21,7 @@ export default {
     return {
       drawer: false,
       fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
-        },
-        {
-          icon: 'mdi-account',
-          title: 'Contacts',
-          to: '/contact',
-        },
-      ],
+      year: new Date().getFullYear(),
       title: 'Contacts',
     }
   },
